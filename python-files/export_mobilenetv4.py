@@ -1,6 +1,7 @@
 import timm
 import torch
 import onnx
+import urllib
 # 1. Model name
 # Model link: https://huggingface.co/timm/mobilenetv3_small_100.lamb_in1k
 # (8th Sept, 2026, press the "Use this model" button > Use in timm to get the model name)
@@ -97,3 +98,12 @@ print(f"Output Name: {output_tensor.name}")
 #                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 # RuntimeError: /project/onnx/version_converter/adapters/axes_input_to_attribute.h:56: adapt: Assertion `node->hasAttribute(kaxes)` failed: No initializer or constant input to node found
 
+# 8. Extract label names
+# This link shows how to extract the label names from the model:
+# https://github.com/huggingface/pytorch-image-models/blob/main/hfdocs/source/models/mobilenet-v3.mdx
+
+url, filename = ("https://raw.githubusercontent.com/pytorch/hub/master/imagenet_classes.txt", "imagenet_classes.txt")
+urllib.request.urlretrieve(url, filename) 
+with open("imagenet_classes.txt", "r") as f:
+    categories = [s.strip() for s in f.readlines()]
+    f.close()
