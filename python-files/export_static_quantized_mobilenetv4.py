@@ -118,7 +118,8 @@ print("Start quantizing pre-processed ONNX model to INT8...")
 ort_quant.quantize_dynamic(
     model_input=onnx_prep_file_path,
     model_output=onnx_int8_file_path,
-    weight_type=ort_quant.QuantType.QUInt8
+    weight_type=ort_quant.QuantType.QUInt8,
+    per_channel=True
 )
 print(f"Quantized INT8 model saved to {onnx_int8_file_path} successfully.")
 
@@ -242,6 +243,7 @@ ort_quant.quantize_static(
     calibration_data_reader=calibration_reader,
     weight_type=ort_quant.QuantType.QInt8,
     activation_type=ort_quant.QuantType.QInt8,
+    per_channel=True
 )
 print(f"Statically quantized INT8 model saved to {onnx_static_int8_file_path} successfully.")
 
