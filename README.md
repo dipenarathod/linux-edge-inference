@@ -2,10 +2,11 @@ Edge AI inference project
 
 ## Python Files Folder (python-files)
 - `export_mobilenetv4.py`: This script loads a MobileNetV3 model from Hugging Face, converts it to ONNX format, and validates the graph integrity. 
-It also retrieves the labels and stores them locally in "imagenet_classes.txt".
+It also retrieves the labels and stores them locally in "imagenet_classes.txt".\
 - `export_dynamic_quantized_mobilenetv4.py`: This script loads a MobileNetV3 model from Hugging Face, **quantizes the model to use INT8 for dynamic quantization**, converts it to ONNX format, and validates the graph integrity. 
-It also retrieves the labels and stores them locally in "imagenet_classes.txt".
-- 'export_static_quantized_mobilenetv4.py`: This script loads a MobileNetV3 model from Hugging Face, **quantizes the model to use INT8 for static quantization**, converts it to ONNX format, and validates the graph.
+It also retrieves the labels and stores them locally in "imagenet_classes.txt".\
+- `export_static_quantized_mobilenetv4.py`: This script loads a MobileNetV3 model from Hugging Face, **quantizes the model to use INT8 for static quantization**, converts it to ONNX format, and validates the graph.\
+- `shrink_validation_set.py`: This script opens folder **"./imagenetv2-top-images-format-val"** and retain only one image for each class, shrinking the test set size (making it easier to copy the folder to the Raspberry Pi for testing). Refer to **Get a labeled test dataset for validation** section of the README to get more details on how to get the test dataset.\
 
 ### Getting the calibration images for static quantization
 1. Create a calibration_images folder in the same directory as your Python files.
@@ -14,6 +15,18 @@ It also retrieves the labels and stores them locally in "imagenet_classes.txt".
 (.venv) dipen@dipen-ubuntu-mate:~/Desktop/linux-edge-inference/python-files/calibration_images$ git clone https://github.com/EliSchwartz/imagenet-sample-images.git
 '''
 3. You should have an image folder with 1000+ images in it.
+
+### Get a labeled test dataset for validation
+[Image Folder Link](https://huggingface.co/datasets/vaishaal/ImageNetV2/blob/main/imagenetv2-top-images.tar.gz)
+1. The zip folder has 1000 folders with each folder name corresponding to a class in the dataset (0, 1, 2 ... 999).\
+2. Download the folder and paste it in python-files folder.\
+3. Run the Python script (`shrink_validation_set.py`) to retain only one image from each class folder.\
+4. You can try copy-pasting the images folder to the Raspberry Pi using the VS Code GUI, but I could not.\
+An alternate is to use rsync on your main machine and copy the folder over to your Raspberry Pi:
+'''rsync -avzP /path/to/local/folder/ user@remote_host:/path/to/destination/'''
+Example use:\
+'''dipen@dipen-ubuntu-mate:~/Desktop/linux-edge-inference/python-files$ rsync -avzP /home/dipen/Desktop/linux-edge-inference/python-files/imagenetv2-top-images-format-val admin@192.168.0.115:/home/admin/edge-ai-c++-part-3'''
+
 
 ## Installing C++ ONNX Runtime on Raspberry Pi
 I suggest using the Remote Development Extension in VS Code to connect to your pi over SSH.\
@@ -121,6 +134,10 @@ Task 3: Run the exact same 100-run benchmark on the INT8 model.
 
 Task 4: Create a table comparing FP32 vs. INT8 (Latency, RAM, File Size).
 
+Task 5: Introduce a pre-process function to read images frm the prepared validation set and apply the pre-processing steps as obtained by printing the data_config in `export_static_quantized_mobilenetv4.py`.
+
+Task 6: Modify the 100-run benchmark to now run 1000 times, and read one image from each folder. Pre-process the image and pass it to the model for inference. 
+
 
 
 ## Miscellaneous (Troubleshooting, tips, etc.)
@@ -133,5 +150,8 @@ admin@raspberrypi5:~/edge-ai-c++-part-1 $ cd build/
 admin@raspberrypi5:~/edge-ai-c++-part-1/build $ cmake ..
 admin@raspberrypi5:~/edge-ai-c++-part-1/build $ make -j4
 '''
+
+rsync -avzP /home/dipen/Desktop/linux-edge-inference/python-files/imagenetv2-top-images-format-val admin@192.168.0.115:/home/admin/edge-ai-c++-part-3
+
 
 
