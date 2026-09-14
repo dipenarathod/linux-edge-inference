@@ -1,1 +1,3 @@
 **/.venv
+**/calibration_images
+**/imagenetv2-top-images-format-val
