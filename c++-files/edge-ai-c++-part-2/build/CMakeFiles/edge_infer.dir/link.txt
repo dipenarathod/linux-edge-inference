@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/edge_infer.dir/src/main.cpp.o CMakeFiles/edge_infer.dir/src/helpers/helpers.cpp.o -o edge_infer  -Wl,-rpath,/home/admin/onnxruntime/lib /home/admin/onnxruntime/lib/libonnxruntime.so 

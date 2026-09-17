@@ -1,0 +1,3 @@
+/home/admin/edge-ai-c++-part-2/build/CMakeFiles/edge_infer.dir
+/home/admin/edge-ai-c++-part-2/build/CMakeFiles/edit_cache.dir
+/home/admin/edge-ai-c++-part-2/build/CMakeFiles/rebuild_cache.dir
