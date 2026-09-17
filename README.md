@@ -1,4 +1,4 @@
-Edge AI inference project
+Edge AI inference project: Deploying MobilenetV3 on Raspberry Pi 5 using ONNX Runtime and C++.
 
 ## Table of Contents
 - [Python Files](#python-files-folder-python-files)
