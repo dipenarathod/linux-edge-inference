@@ -155,7 +155,7 @@ Task 4: Create a table comparing FP32 vs. INT8 (Latency, RAM, File Size).
 
 Task 5: Introduce a pre-processing function to read images from the prepared validation set and apply the pre-processing steps as obtained by printing the data_config in `export_static_quantized_mobilenetv3.py`.
 
-Task 6: Modify the 100-run benchmark to now run 1000 times, and read one image from each folder. Pre-process the image and pass it to the model for inference. 
+Task 6: Modify the 100-run benchmark to run 1000 times, reading one image from each folder. Pre-process the image and pass it to the model for inference. 
 
 ## Results
 
